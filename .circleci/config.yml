@@ -1,12 +1,45 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
+jobs:
+  semgrep-scan:
+    parameters:
+      repo_path:
+        type: string
+        default: myorg/semgrep-test-repo
+      default_branch:
+        type: string
+        default: main
+    environment:
+      # Scan with rules set in Semgrep App's rule board.
+      # Get your token at semgrep.dev/orgs/-/settings/tokens
+      SEMGREP_APP_TOKEN: $SEMGREP_APP_TOKEN
 
-orbs:
-  semgrep: appfolio/semgrep@0.0.1
+      # Scan changed files in PRs, only report new findings (existing findings ignored)
+      SEMGREP_BASELINE_REF: << parameters.default_branch >>
+
+    # == Optional settings in the `environment:` block
+
+    # Instead of `SEMGREP_APP_TOKEN:`, set hard-coded rulesets, 
+    # viewable in logs.
+    #   SEMGREP_RULES: p/default # See more at semgrep.dev/explore.
+    #   SEMGREP_REPO_NAME: << parameters.repo_path >>
+    #   SEMGREP_REPO_URL: << pipeline.project.git_url >>
+    #   SEMGREP_BRANCH: << pipeline.git.branch >>
+
+    # Never fail the build due to findings.
+    # Instead, just collect findings for semgrep.dev/manage/findings
+    #   SEMGREP_AUDIT_ON: unknown
+
+    # Change job timeout (default is 1800 seconds; set to 0 to disable)
+    #   SEMGREP_TIMEOUT: 300
+
+    docker:
+      - image: returntocorp/semgrep
+    steps:
+      - checkout
+      - run:
+          name: "Semgrep scan"
+          command: semgrep ci
 workflows:
-    example-workflow:
-      jobs:
-        - semgrep/scan:
-          
-            repo_path: https://github.com/landtcloud/trycircleci 
+  main:
+    jobs:
+      - semgrep-scan
