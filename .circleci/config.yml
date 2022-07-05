@@ -8,4 +8,5 @@ workflows:
     example-workflow:
       jobs:
         - semgrep/scan:
+          
             repo_path: https://github.com/landtcloud/trycircleci 
