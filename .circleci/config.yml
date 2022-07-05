@@ -27,8 +27,8 @@ workflows:
     jobs:
       - say-hello
 
-example-workflow:
-      jobs:
-        - semgrep/scan:
-            repo_path: https://github.com/landtcloud/trycircleci
+  example-workflow:
+    jobs:
+      - semgrep/scan:
+          repo_path: https://github.com/landtcloud/trycircleci
 
