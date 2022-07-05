@@ -2,6 +2,8 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
+orbs:
+  semgrep: appfolio/semgrep@0.0.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
@@ -24,3 +26,9 @@ workflows:
   say-hello-workflow:
     jobs:
       - say-hello
+
+example-workflow:
+      jobs:
+        - semgrep/scan:
+            repo_path: https://github.com/landtcloud/trycircleci
+
