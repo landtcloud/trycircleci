@@ -40,6 +40,6 @@ jobs:
           name: "Semgrep scan"
           command: semgrep ci
 workflows:
-  main:
+  Semgrep flow:
     jobs:
       - semgrep-scan
