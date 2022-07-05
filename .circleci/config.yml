@@ -7,7 +7,7 @@ jobs:
         default: myorg/semgrep-test-repo
       default_branch:
         type: string
-        default: main
+        default: circleci-project-setup
     environment:
       # Scan with rules set in Semgrep App's rule board.
       # Get your token at semgrep.dev/orgs/-/settings/tokens
