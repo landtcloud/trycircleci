@@ -14,7 +14,7 @@ jobs:
       SEMGREP_APP_TOKEN: 71ee4a24dbf9bfd626f413dcf242d347649010937bd9acb5a72e0dda799e8f8c
 
       # Scan changed files in PRs, only report new findings (existing findings ignored)
-      SEMGREP_BASELINE_REF: https://github.com/landtcloud/trycircleci
+      SEMGREP_BASELINE_REF: << parameters.default_branch >>
 
     # == Optional settings in the `environment:` block
 
