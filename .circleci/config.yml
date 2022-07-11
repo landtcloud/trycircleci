@@ -1,5 +1,6 @@
 version: 2.1
 jobs:
+
   semgrep-scan:
     parameters:
       repo_path:
@@ -42,13 +43,25 @@ jobs:
       - run:
           name: "Semgrep scan"
           command: semgrep ci
+  
+  
+  sonarbuild:
+    docker:
+      - image: 'node:latest'
+    steps:
+      - checkout
+      - sonarcloud/scan
 
-
-
+orbs:
+  sonarcloud: sonarsource/sonarcloud@1.1.1
+  
 workflows:
   main:
     jobs:
       - semgrep-scan
+      
+    jobs: 
+      - sonarbuild
 
 
 
